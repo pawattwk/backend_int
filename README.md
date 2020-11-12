@@ -1,2 +1,1 @@
-# backend_int
-integrate service ONE-Conference API
+jitsi_nodejs
