@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const CryptoJS = require("crypto-js");
 
 function encode(data){
   let logic = crypto.createCipher('aes-128-cbc', process.env.SECRET_TOKEN);
@@ -21,7 +22,30 @@ function decodeToken(token,secretkey){
   return decode
 }
 
+function encodeJS(data) {
+  try {
+    var ciphertext = CryptoJS.AES.encrypt(
+      JSON.stringify(data),
+      process.env.SECRET_TOKEN
+    ).toString();
+    return ciphertext;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+function decodeJS(data) {
+  try {
+    var bytes = CryptoJS.AES.decrypt(data, process.env.SECRET_TOKEN);
+    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    return decryptedData;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
 
 module.exports ={
-  encode,decode,decodeToken
+  encode,decode,decodeToken,encodeJS,decodeJS
 }
