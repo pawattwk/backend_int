@@ -20,7 +20,8 @@ const loginRouter = require('./service/authentication');
 const synconeid = require('./routes/synconeid')
 const votes_mg = require('./routes/votes')
 const votes = require('./routes/votes_jitsi')
-const onechatroom = require('./routes/OnechatRoom')
+// const onechatroom = require('./routes/OnechatRoom')
+const intregateService = require('./routes/intregateService')
 const onebox = require('./routes/onebox')
 const otp = require('./routes/OTP')
 const genclientIdRouter = require('./routes/gen_clientId')
@@ -55,7 +56,7 @@ if (process.env.NODE_ENV == 'development') {
   app.use('/api/avatar', upload_photoRouter);
   app.use('/api/votes' , votes)
   app.use('/api/votes_manage' , votes_mg)
-  app.use('/api/onechatroom' , onechatroom)
+  app.use('/api/onechatroom' , intregateService)
   app.use('/api/synconeid' , synconeid)
   app.use('/api/onebox' , onebox)
   app.use('/api/otp' , otp)
@@ -69,7 +70,7 @@ if (process.env.NODE_ENV == 'development') {
   app.use('/backend/api/avatar', upload_photoRouter);
   app.use('/backend/api/votes' , votes)
   app.use('/backend/api/votes_manage' , votes_mg)
-  app.use('/api/onechatroom' , onechatroom)
+  app.use('/api/onechatroom' , intregateService)
   app.use('/api/socket', socketRouter)
   app.use('/backend/api/synconeid' , synconeid)
   app.use('/backend/api/onebox' , onebox)

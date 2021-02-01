@@ -19,6 +19,14 @@ router.post("/create", async function (req, res, next) {
       let tagService = data.tag;
       let key = sha1(meetingid + data.name);
       let url = process.env.ONECHAT_ROOM_DOMAIN + meetingid + "?";
+      const optionResult = () => {
+        let media = {
+          video: false,
+          audio: true
+        }
+        data.option == 'video' ? media.video = true : media.video = false
+        return media
+      }
       if (tagService == null || tagService == "onechat") {
         tagService = "onechat";
         let session = new roomonechat({
@@ -36,7 +44,7 @@ router.post("/create", async function (req, res, next) {
           roomname: data.roomname,
           keyroom: key,
           nickname: data.name,
-          option: data.option,
+          option: optionResult(),
           clientid: data.name + "-" + "host",
           service: tagService,
           userXmpAuth: process.env.user_jitsi,
@@ -50,7 +58,7 @@ router.post("/create", async function (req, res, next) {
             urlroom: url,
             meetingid: meetingid,
             key: key,
-            option: data.option,
+            option: optionResult(),
             created_at: timeNow(),
           },
           events: "CreateRoom",
@@ -73,7 +81,7 @@ router.post("/create", async function (req, res, next) {
           roomname: data.roomname,
           keyroom: key,
           nickname: data.name,
-          option: data.option,
+          option: optionResult(),
           clientid: data.name + "-" + "host",
           service: tagService,
           userXmpAuth: process.env.user_jitsi,
@@ -87,7 +95,7 @@ router.post("/create", async function (req, res, next) {
             urlroom: url,
             meetingid: meetingid,
             key: key,
-            option: data.option,
+            option: optionResult(),
             created_at: timeNow(),
           },
           events: "CreateRoom",
@@ -124,6 +132,14 @@ router.post("/join", async function (req, res, next) {
       let roomdata;
       let arrJoin;
       let url = process.env.ONECHAT_ROOM_DOMAIN + data.meetingid + "?";
+      const optionResult = () => {
+        let media = {
+          video: false,
+          audio: true
+        }
+        data.option == 'video' ? media.video = true : media.video = false
+        return media
+      }
       if (tagService == null || tagService == "onechat") {
         roomdata = await roomonechat.findOne({ meeting_id: data.meetingid });
         if (roomdata) {
@@ -136,7 +152,7 @@ router.post("/join", async function (req, res, next) {
               roomname: roomdata.roomname,
               keyroom: roomdata.keyroom,
               nickname: data.name,
-              option: data.option,
+              option: optionResult(),
               clientid: `${data.name}`,
               service: "onechat",
             };
@@ -162,7 +178,7 @@ router.post("/join", async function (req, res, next) {
                 name_join: data.name,
                 meetingid: data.meetingid,
                 join_at: timeNow(),
-                option: data.option,
+                option: optionResult(),
               },
               events: "JoinRoom",
               status: "Success",
@@ -185,7 +201,7 @@ router.post("/join", async function (req, res, next) {
               roomname: roomdata.roomname,
               keyroom: roomdata.keyroom,
               nickname: data.name,
-              option: data.option,
+              option: optionResult(),
               clientid: `${data.name}`,
               service: "ManageAi",
             };
@@ -211,7 +227,7 @@ router.post("/join", async function (req, res, next) {
                 name_join: data.name,
                 meetingid: data.meetingid,
                 join_at: timeNow(),
-                option: data.option,
+                option: optionResult(),
               },
               events: "JoinRoom",
               status: "Success",
